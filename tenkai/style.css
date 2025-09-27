@@ -1,0 +1,350 @@
+:root {
+  --color1: #000000;
+  --color2: #05194b;
+  --color3: #354b97;
+  --color4: #1e4cff;
+  --color5: #02184b;
+}
+body {
+  display: flex;
+  justify-content: center;
+
+  font-family: "Unbounded", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+
+  margin: 0;
+  padding: 0;
+  min-height: 2100px;
+  background: linear-gradient(
+    to bottom,
+    var(--color1),
+    var(--color2),
+    var(--color3),
+    var(--color4),
+    var(--color5)
+  );
+  transition: background 0.2s ease;
+}
+
+/* Header */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0px 20px;
+
+  color: white;
+  transition: background-color 0.3s ease;
+  background-color: transparent;
+
+  backdrop-filter: blur(2px);
+}
+
+header.scrolled {
+  background-color: white;
+  color: black;
+}
+
+a {
+  transition: 0.3s;
+  text-decoration: none;
+  color: black;
+}
+
+a:hover {
+  opacity: 50%;
+}
+
+/* На мобилках (ширина < 400px) */
+@media (max-width: 400px) {
+  header {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .icons-wrapper {
+    display: flex;
+    gap: 10px;
+  }
+}
+
+/* Связанное с обложкой */
+.tenkaiimage {
+  border-radius: 15px;
+}
+.cover {
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  border-radius: 15px;
+  max-width: 800px;
+  color: black;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 80%;
+  text-align: center;
+}
+.desc {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Кнопка Play */
+.playbuttondiv {
+  display: flex;
+  justify-content: center;
+  width: 80%;
+  height: 60px;
+  background-color: white;
+  border-radius: 15px;
+  max-width: 800px;
+  position: fixed;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  transition: 0.5s;
+}
+.play {
+  transition: 0.3s;
+  width: 60px;
+  height: 60px;
+  background: transparent;
+  border: none;
+}
+.playbuttondiv:hover {
+  transition: 0.3s;
+  cursor: pointer;
+}
+.play:hover {
+  transition: 0.3s;
+  cursor: pointer;
+}
+.playbuttondiv.raised {
+  bottom: 70px; /* Поднять кнопку над плеером */
+}
+
+/* Стили для строк текста */
+.text {
+  color: white;
+  background-color: black;
+  border-radius: 15px;
+  width: 80%;
+  position: absolute;
+  top: 70%;
+  max-width: 800px;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.text.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.text span[data-time] {
+  transition: all 0.3s ease;
+  opacity: 0.5; /* Несыгранные строки */
+  display: inline-block;
+  padding: 2px 4px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.text span[data-time].played {
+  opacity: 0.9; /* Сыгранные строки */
+  color: #6e1826;
+  font-weight: bold;
+}
+.text span[data-time].highlight {
+  opacity: 1; /* Текущая строка */
+  color: #6e1826;
+  font-weight: bold;
+  text-shadow: 0 0 5px #6e1826;
+}
+.text span[data-time]:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  opacity: 0.9 !important;
+}
+.text p {
+  line-height: 1.6;
+}
+
+/* Слайдер слева */
+.vertical-player {
+  position: fixed;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  padding: 20px 10px;
+  border-radius: 15px;
+  z-index: 3;
+  width: 115px;
+  box-sizing: border-box;
+
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Таймер */
+#time-display {
+  font-size: 14px;
+  color: black;
+  text-align: center;
+}
+
+/* Вертикальный ползунок */
+#seekbar {
+  writing-mode: bt-lr;
+  -webkit-appearance: slider-vertical;
+  width: 6px;
+  height: 200px;
+  background: black;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* Бегунок */
+#seekbar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 10px;
+  background: black;
+  border-radius: 50%;
+}
+
+/* APPLE MUSIC ICON */
+#applemusic {
+  transition: filter 0.3s;
+}
+
+/* Ширина экрана */
+@media only screen and (max-height: 900px) {
+  .playbuttondiv {
+    box-shadow: 0 0 5px #02184b, 0 0 10px #6e1826;
+  }
+
+  .vertical-player {
+    box-shadow: 0 0 5px #02184b, 0 0 10px #6e1826;
+  }
+}
+@media only screen and (max-width: 699px) {
+  .cover {
+    flex-direction: column;
+  }
+  .tenkaiimage {
+    width: 100%;
+  }
+  .text {
+    top: 110%;
+  }
+  .desc {
+    margin-left: 0px;
+  }
+}
+
+@media (max-width: 999px) {
+  .vertical-player {
+    position: fixed;
+    left: unset;
+    right: 20px;
+    top: unset;
+    bottom: 20px;
+    transform: none;
+
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    width: 300px;
+    height: 60px;
+    padding: 10px 15px;
+  }
+
+  #seekbar {
+    writing-mode: lr-tb;
+    -webkit-appearance: none;
+    width: 150px;
+    height: 6px;
+    background: black;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+
+  /* Стили для горизонтального слайдера в разных браузерах */
+  #seekbar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 16px;
+    width: 16px;
+    background: #555;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  #seekbar::-moz-range-thumb {
+    height: 16px;
+    width: 16px;
+    background: #555;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  #time-display {
+    margin-left: 10px;
+    white-space: nowrap;
+  }
+
+  /* Слова по ширине */
+  .words {
+    font-size: 14px;
+  }
+}
+
+/* Ультра мелкие экраны */
+@media (max-width: 549px) {
+  .vertical-player {
+    left: 50%;
+    right: unset;
+    bottom: 20px;
+    transform: translateX(-50%);
+    width: 80%;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+  }
+
+  #seekbar {
+    width: 60vw;
+    height: 6px;
+  }
+
+  #time-display {
+    font-size: 12px;
+    margin-left: 8px;
+  }
+
+  .playbuttondiv {
+    bottom: -10px;
+  }
+}
